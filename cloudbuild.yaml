@@ -1,24 +1,33 @@
 steps:
-  # 1단계: dags 폴더 동기화
-  - name: 'gcr.io/cloud-builders/gsutil'
-    args: ['-m', 'rsync', '-r', '-d', 'dags', 'gs://asia-northeast3-tu-main-dat-d8e0bfa9-bucket/dags']
+# Step 1: Get the DAGs folder GCS path from the Composer environment
+- name: 'gcr.io/cloud-builders/gcloud'
+  id: 'get_dags_bucket'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    gcloud composer environments describe tu-main-data-airflow-v1 \
+      --location asia-northeast3 \
+      --format="get(config.dagGcsPrefix)" > /workspace/dags_path.txt
 
-  # 2단계: requirements.txt 파일 비교 후, 변경됐을 때만 업데이트
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:460.0.0' # ◀ [수정] 버전을 460.0.0으로 변경
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        if gsutil diff -s requirements.txt gs://asia-northeast3-tu-main-dat-d8e0bfa9-bucket/requirements.txt >/dev/null 2>&1; then
-          echo "✅ requirements.txt에 변경 사항이 없습니다. 업데이트를 건너뜁니다."
-        else
-          echo "🔄 requirements.txt가 변경되었습니다. 새 파일을 업로드하고 환경 업데이트를 시작합니다..."
-          
-          gsutil cp requirements.txt gs://asia-northeast3-tu-main-dat-d8e0bfa9-bucket/requirements.txt
-          
-          gcloud composer environments update tu-main-data-airflow-v1 \
-            --location asia-northeast3 \
-            --update-pypi-packages-from-file gs://asia-northeast3-tu-main-dat-d8e0bfa9-bucket/requirements.txt
-        fi
-options:
-  logging: CLOUD_LOGGING_ONLY
+# Step 2: Use gsutil rsync to sync the dags folder.
+# The -d flag deletes files in the destination that are not in the source.
+- name: 'gcr.io/cloud-builders/gsutil'
+  args:
+  - 'rsync'
+  - '-d'
+  - '-r'
+  - 'dags/'
+  - '$(cat /workspace/dags_path.txt)'
+
+# Step 3: Update the PyPI packages from requirements.txt
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - 'composer'
+  - 'environments'
+  - 'update'
+  - 'tu-main-data-airflow-v1'
+  - '--location'
+  - 'asia-northeast3'
+  - '--update-pypi-packages-from-file'
+  - 'requirements.txt'
