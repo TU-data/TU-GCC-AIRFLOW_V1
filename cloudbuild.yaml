@@ -7,8 +7,8 @@ steps:
   - '-c' 
   - |
     DAGS_BUCKET=$(gcloud composer environments describe tu-main-data-airflow-v1 --location asia-northeast3 --format="get(config.dagGcsPrefix)")
-    echo "Found DAGs bucket: $DAGS_BUCKET"
-    echo -n "$DAGS_BUCKET" > /workspace/dags_path.txt
+    echo "Found DAGs bucket: $$DAGS_BUCKET"
+    echo -n "$$DAGS_BUCKET" > /workspace/dags_path.txt
 
 # Step 2: Use gsutil rsync to sync the dags folder.
 # The -d flag deletes files in the destination that are not in the source.
