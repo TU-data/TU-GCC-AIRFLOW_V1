@@ -1,14 +1,14 @@
 steps:
-# Step 1: Get the DAGs folder GCS path from the Composer environment
+# Step 1: Get the DAGs folder GCS path and write it to a file
 - name: 'gcr.io/cloud-builders/gcloud'
   id: 'get_dags_bucket'
   entrypoint: 'bash'
   args:
-  - '-c'
+  - '-c' 
   - |
-    gcloud composer environments describe tu-main-data-airflow-v1 \
-      --location asia-northeast3 \
-      --format="get(config.dagGcsPrefix)" > /workspace/dags_path.txt
+    DAGS_BUCKET=$(gcloud composer environments describe tu-main-data-airflow-v1 --location asia-northeast3 --format="get(config.dagGcsPrefix)")
+    echo "Found DAGs bucket: $DAGS_BUCKET"
+    echo -n "$DAGS_BUCKET" > /workspace/dags_path.txt
 
 # Step 2: Use gsutil rsync to sync the dags folder.
 # The -d flag deletes files in the destination that are not in the source.
