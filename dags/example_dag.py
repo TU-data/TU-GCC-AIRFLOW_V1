@@ -12,4 +12,5 @@ with DAG(
     catchup=False,
     tags=["example"],
 ) as dag:
-    bash_task = BashOperator(task_id="bash_task", bash_command="echo 'Hello World'")
+    # This is a test commit to trigger Cloud Build.
+    bash_task = BashOperator(task_id="bash_task", bash_command="echo 'Hello World'") 
