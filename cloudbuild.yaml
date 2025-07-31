@@ -1,21 +1,25 @@
 steps:
-  # 1단계: dags 폴더와 그 안의 모든 하위 폴더(configs, schemas)를 동기화합니다.
+  # 1단계: dags 폴더 동기화 (변경 없음)
   - name: 'gcr.io/cloud-builders/gsutil'
     args: ['-m', 'rsync', '-r', '-d', 'dags', 'gs://asia-northeast3-tu-main-dat-d8e0bfa9-bucket/dags']
 
-  # 2단계: requirements.txt 파일을 GCS 버킷 최상위 경로에 복사합니다.
+  # 2단계: requirements.txt 파일을 GCS 버킷에 복사 (변경 없음)
   - name: 'gcr.io/cloud-builders/gsutil'
     args: ['cp', 'requirements.txt', 'gs://asia-northeast3-tu-main-dat-d8e0bfa9-bucket/']
 
-  # 3단계: [수정됨] gcloud 명령어를 bash 스크립트로 직접 실행하여 오류를 우회합니다.
+  # 3단계: [최종 수정] GCS의 파일을 빌드 환경으로 복사 후, 로컬 경로로 업데이트 실행
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:478.0.0'
     entrypoint: 'bash'
     args:
       - '-c'
       - |
+        # 먼저 GCS 버킷의 파일을 빌드 컨테이너 내부의 임시 경로로 복사합니다.
+        gsutil cp gs://asia-northeast3-tu-main-dat-d8e0bfa9-bucket/requirements.txt /tmp/requirements.txt
+
+        # 이제 GCS 경로가 아닌, 컨테이너 내부의 로컬 경로를 사용하여 업데이트를 실행합니다.
         gcloud composer environments update tu-main-data-airflow-v1 \
           --location asia-northeast3 \
-          --update-pypi-packages-from-file gs://asia-northeast3-tu-main-dat-d8e0bfa9-bucket/requirements.txt
+          --update-pypi-packages-from-file /tmp/requirements.txt
 
 options:
   logging: CLOUD_LOGGING_ONLY
