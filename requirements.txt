@@ -1,3 +1,5 @@
-gspread
-pandas
-google-cloud-bigquery
+# gspread
+# pandas
+# google-cloud-bigquery
+
+requests==2.31.0
