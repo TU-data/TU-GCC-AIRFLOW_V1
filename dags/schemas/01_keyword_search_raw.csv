@@ -1,0 +1,4 @@
+기존 컬럼명,데이터 타입,영어 컬럼명
+날짜,DATE,search_date
+키워드,STRING,keyword
+검색수,INTEGER,search_volume

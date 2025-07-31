@@ -1,0 +1,4 @@
+기존 컬럼명,데이터 타입,영어 컬럼명
+구분,DATE,record_date
+누적 친구수,INT64,total_friends
+당일친구수,INT64,daily_new_friends

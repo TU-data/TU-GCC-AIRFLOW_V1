@@ -1,0 +1,13 @@
+기존 컬럼명,데이터 타입,영어 컬럼명
+초진일,DATE,first_visit_date
+담당실장,STRING,coordinator_name
+예진의,STRING,treatment_doctor
+차트번호,STRING,chart_id
+날짜_차트번호,STRING,chart_id_first_visit_date
+미동의 사유,STRING,refusal_reason_1
+사유,STRING,refusal_reason_2
+인입경로,STRING,visit_channel
+챠트번호+이름,STRING,chart_id_patient_name
+미동의 금액,INT64,refusal_amount
+미동의 과목,STRING,treatment_type
+컨택내용/날짜,STRING,recontact_date

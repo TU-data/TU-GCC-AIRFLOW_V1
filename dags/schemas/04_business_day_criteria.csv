@@ -1,0 +1,4 @@
+기존 컬럼명,데이터 타입,영어 컬럼명
+날짜,DATE,business_date
+영업일여부,BOOL,is_business_day
+목표신환수,INT64,target_new_patients

@@ -1,0 +1,4 @@
+기존 컬럼명,데이터 타입,영어 컬럼명
+날짜,DATE,target_date
+목표매출,INT64,mothly_target_sales
+실제매출,INT64,mothly_sales

@@ -1,0 +1,33 @@
+기존 컬럼명,데이터 타입,영어 컬럼명
+날짜,DATE,consult_date
+타임,TIME,consult_time
+인입1,STRING,consult_channel_1
+인입2,STRING,consult_channel_2
+인입3,STRING,consult_channel_3
+직업,STRING,job
+이름,STRING,name
+차트번호,STRING,chart_id
+예산(만원),INT64,budget_10k_krw
+방문여부,STRING,is_visited
+상담사,STRING,coordinator_name
+통역사,STRING,interpreter_name
+시술종류,STRING,treatment_category
+시술개수,INTEGER,unit_count
+예약금(엔),INT64,deposit_amount_jpy
+최종견적(원),INT64,estimate_amount_krw
+방문,TIME,time_visit
+포토,TIME,time_photo
+스몰톡(실장님),TIME,time_chat
+원장님,TIME,time_doctor
+후상담,TIME,time_after_consult
+귀가,TIME,time_home
+예약,STRING,is_reserved
+예약금방식,STRING,deposit_type
+덴트웹예약,STRING,dentweb_reservation
+한국 여행계획,STRING,travel_plan
+생년월일,DATE,date_birth
+성별,STRING,gender
+거주지,STRING,residence
+상담회차수,INTEGER,consult_round
+상담회지역,STRING,consult_location
+최초내원일,DATE,first_visit_date

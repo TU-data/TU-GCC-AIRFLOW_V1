@@ -1,0 +1,6 @@
+기존 컬럼명,데이터 타입,영어 컬럼명
+차수,INTEGER,consult_round
+년월,DATE,consult_yr_mnt
+지역,STRING,consult_location
+총비용,INT64,total_cost
+인원,INTEGER,headcount

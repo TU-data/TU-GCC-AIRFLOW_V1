@@ -1,0 +1,45 @@
+기존 컬럼명,데이터 타입,영어 컬럼명
+담당실장,STRING,coordinator_name
+상담일,DATE,consultation_date
+해외환자,BOOL,is_foreign_patient
+차트번호,STRING,chart_id
+고객명,STRING,patient_name
+구환,BOOL,is_existing_patient
+등급1,STRING,grade_primary
+등급2,STRING,grade_secondary
+인입경로,STRING,visit_channel
+상담불가,BOOL,consultation_blocked
+불가사유,STRING,block_reason
+진료과,STRING,treatment_category_1
+진료세부,STRING,treatment_name_1
+기공소,STRING,lab_name_1
+개수,STRING,unit_count_1
+1정가,INTEGER,price_1
+진료과,STRING,treatment_category_2
+진료세부,STRING,treatment_name_2
+기공소,STRING,lab_name_2
+개수,STRING,unit_count_2
+2정가,INTEGER,price_2
+진료과,STRING,treatment_category_3
+진료세부,STRING,treatment_name_3
+기공소,STRING,lab_name_3
+개수,STRING,unit_count_3
+3정가,INTEGER,price_3
+정가(세포함),INTEGER,total_price_with_tax
+"객단가(세포함, 총매출)",INTEGER,arp_base_amount
+당일납부액 (세포함),INTEGER,today_payment_with_tax
+MARTH,BOOL,is_marth
+객단가제외,BOOL,is_excluded_from_arp
+동의여부,BOOL,is_consented
+환불여부,BOOL,is_refunded
+동의전환,STRING,converted_to_agreement
+기준,INTEGER,price_standard
+조건,STRING,pricing_condition
+사용,INTEGER,usage_amount
+작성일,DATE,review_written_date
+작성매체,STRING,review_platform
+닉네임,STRING,review_nickname
+작성월,INTEGER,review_written_month
+소개자,STRING,referrer_name
+차트번호,INTEGER,referrer_chart_id
+비고,STRING,referrer_note

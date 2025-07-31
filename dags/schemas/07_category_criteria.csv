@@ -1,0 +1,6 @@
+기존 컬럼명,데이터 타입,영어 컬럼명
+내원경로,STRING,visit_channel
+대분류(국적),STRING,channel_category
+대표원장님 소개,STRING,introduced_by_director
+해외분류(국적),STRING,international_channel_type
+소개분류,STRING,referral_type

@@ -1,0 +1,8 @@
+기존 컬럼명,데이터 타입,영어 컬럼명
+차트번호,STRING,chart_id
+고객명,STRING,patient_name
+국적1,STRING,nationality
+실 거주지,STRING,actual_residence
+구분,STRING,residency_type
+국적2 (수식),STRING,inferred_nationality
+여권번호,STRING,passport_umber

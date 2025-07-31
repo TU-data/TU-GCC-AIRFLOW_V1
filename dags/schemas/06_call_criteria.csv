@@ -1,0 +1,4 @@
+기존 컬럼명,데이터 타입,영어 컬럼명
+내원경로,STRING,visit_channel
+대분류,STRING,visit_channel_group
+중분류,STRING,visit_channel_type
