@@ -3,23 +3,26 @@ steps:
   - name: 'gcr.io/cloud-builders/gsutil'
     args: ['-m', 'rsync', '-r', '-d', 'dags', 'gs://asia-northeast3-tu-main-dat-d8e0bfa9-bucket/dags']
 
-  # 2단계: requirements.txt 파일을 GCS 버킷에 복사 (변경 없음)
-  - name: 'gcr.io/cloud-builders/gsutil'
-    args: ['cp', 'requirements.txt', 'gs://asia-northeast3-tu-main-dat-d8e0bfa9-bucket/']
-
-  # 3단계: [최종 수정] GCS의 파일을 빌드 환경으로 복사 후, 로컬 경로로 업데이트 실행
+  # 2단계: [수정됨] requirements.txt 파일 비교 후, 변경됐을 때만 업데이트
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:478.0.0'
     entrypoint: 'bash'
     args:
       - '-c'
       - |
-        # 먼저 GCS 버킷의 파일을 빌드 컨테이너 내부의 임시 경로로 복사합니다.
-        gsutil cp gs://asia-northeast3-tu-main-dat-d8e0bfa9-bucket/requirements.txt /tmp/requirements.txt
-
-        # 이제 GCS 경로가 아닌, 컨테이너 내부의 로컬 경로를 사용하여 업데이트를 실행합니다.
-        gcloud composer environments update tu-main-data-airflow-v1 \
-          --location asia-northeast3 \
-          --update-pypi-packages-from-file /tmp/requirements.txt
-
+        # gsutil diff: 두 파일이 다르면 0이 아닌 종료 코드를 반환합니다.
+        # '|| true'는 GCS에 파일이 아직 없을 때 오류로 종료되지 않도록 합니다.
+        if gsutil diff -s requirements.txt gs://asia-northeast3-tu-main-dat-d8e0bfa9-bucket/requirements.txt >/dev/null 2>&1; then
+          echo "✅ requirements.txt에 변경 사항이 없습니다. 업데이트를 건너뜁니다."
+        else
+          echo "🔄 requirements.txt가 변경되었습니다. 새 파일을 업로드하고 환경 업데이트를 시작합니다..."
+          
+          # 1. 새 requirements.txt 파일 업로드
+          gsutil cp requirements.txt gs://asia-northeast3-tu-main-dat-d8e0bfa9-bucket/requirements.txt
+          
+          # 2. Composer 환경 업데이트 실행
+          gcloud composer environments update tu-main-data-airflow-v1 \
+            --location asia-northeast3 \
+            --update-pypi-packages-from-file gs://asia-northeast3-tu-main-dat-d8e0bfa9-bucket/requirements.txt
+        fi
 options:
   logging: CLOUD_LOGGING_ONLY
