@@ -187,4 +187,4 @@ with DAG(
         task_id='load_japan_consult_raw_data',
         python_callable=run_data_load_task,
         op_kwargs={'config_key': 'GS-update-01_japan_consult_raw'},
-    )
+    ) 
