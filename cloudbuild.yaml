@@ -8,7 +8,7 @@ steps:
     args: ['cp', 'requirements.txt', 'gs://asia-northeast3-tu-main-dat-d8e0bfa9-bucket/']
 
   # 3단계: Composer 환경을 업데이트하여 requirements.txt 설치 트리거
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:478.0.0'
     entrypoint: 'gcloud'
     args:
       - 'composer'
