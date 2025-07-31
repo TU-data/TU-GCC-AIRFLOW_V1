@@ -11,18 +11,19 @@ steps:
       --format="get(config.dagGcsPrefix)" | tr -d '\r\n' > /workspace/dags_path.txt
     echo "Found and cleaned DAGs bucket path: $(cat /workspace/dags_path.txt)"
 
-# Step 2: Use gsutil rsync to sync the dags folder.
+# Step 2: Use gsutil rsync to sync the dags folder within a shell.
 # The -d flag deletes files in the destination that are not in the source.
 - name: 'gcr.io/cloud-builders/gsutil'
+  id: 'sync_dags'
+  entrypoint: 'bash'
   args:
-  - 'rsync'
-  - '-d'
-  - '-r'
-  - 'dags/'
-  - '$(cat /workspace/dags_path.txt)'
+  - '-c'
+  - |
+    gsutil rsync -d -r dags/ "$(cat /workspace/dags_path.txt)"
 
 # Step 3: Update the PyPI packages from requirements.txt
 - name: 'gcr.io/cloud-builders/gcloud'
+  id: 'update_dependencies'
   args:
   - 'composer'
   - 'environments'
