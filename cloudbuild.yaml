@@ -1,24 +1,21 @@
 steps:
-  # 1단계: dags 폴더 동기화 (기존과 동일)
+  # 1단계: dags 폴더와 그 안의 모든 하위 폴더(configs, schemas)를 동기화합니다.
   - name: 'gcr.io/cloud-builders/gsutil'
     args: ['-m', 'rsync', '-r', '-d', 'dags', 'gs://asia-northeast3-tu-main-dat-d8e0bfa9-bucket/dags']
 
-  # 2단계: requirements.txt 파일을 GCS 버킷 루트에 복사
+  # 2단계: requirements.txt 파일을 GCS 버킷 최상위 경로에 복사합니다.
   - name: 'gcr.io/cloud-builders/gsutil'
     args: ['cp', 'requirements.txt', 'gs://asia-northeast3-tu-main-dat-d8e0bfa9-bucket/']
 
-  # 3단계: Composer 환경을 업데이트하여 requirements.txt 설치 트리거
+  # 3단계: [수정됨] gcloud 명령어를 bash 스크립트로 직접 실행하여 오류를 우회합니다.
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:478.0.0'
-    entrypoint: 'gcloud'
+    entrypoint: 'bash'
     args:
-      - 'composer'
-      - 'environments'
-      - 'update'
-      - 'tu-main-data-airflow-v1' # ◀ 여기에 Composer 환경 이름을 입력하세요.
-      - '--location'
-      - 'asia-northeast3' # ◀ Composer 환경이 있는 리전 (버킷 위치와 동일)
-      - '--update-pypi-packages-from-file'
-      - 'gs://asia-northeast3-tu-main-dat-d8e0bfa9-bucket/requirements.txt'
+      - '-c'
+      - |
+        gcloud composer environments update tu-main-data-airflow-v1 \
+          --location asia-northeast3 \
+          --update-pypi-packages-from-file gs://asia-northeast3-tu-main-dat-d8e0bfa9-bucket/requirements.txt
 
 options:
   logging: CLOUD_LOGGING_ONLY
