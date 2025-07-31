@@ -1,0 +1,20 @@
+기존 컬럼명,데이터 타입,영어 컬럼명
+no,INTEGER,no_id
+영문명,STRING,name_eng
+이름,STRING,name_kor
+차트번호,STRING,chart_id
+상담회년월,DATE,consult_yr_mnt
+상담회차수,INTEGER,consult_round
+상담회지역,STRING,consult_location
+원내방문일,DATE,visit_date
+원내방문년월,DATE,visit_yr_mnt
+매출금액,INT64,sales_amount
+성별,STRING,gender
+연령_상담회기준,INTEGER,age
+직업,STRING,occupation
+인입경로_1,STRING,consult_channel_1
+인입경로_2,STRING,consult_channel_2
+상담실장,STRING,consult_manager
+견적금액,INT64,estimate_amount
+상담회방문횟수,INTEGER,consult_count
+누적내원횟수,INTEGER,visit_count
