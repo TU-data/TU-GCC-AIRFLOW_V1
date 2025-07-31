@@ -1,1 +1,5 @@
 apache-airflow[google]
+gspread
+pandas
+google-cloud-bigquery
+google-auth
