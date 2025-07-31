@@ -1,5 +1,5 @@
 steps:
 - name: 'gcr.io/cloud-builders/gsutil'
-  args: ['-m', 'rsync', '-r', 'dags', 'gs://asia-northeast3-tu-main-dat-d8e0bfa9-bucket/dags']
+  args: ['-m', 'rsync', '-r', '-d', 'dags', 'gs://asia-northeast3-tu-main-dat-d8e0bfa9-bucket/dags']
 options:
   logging: CLOUD_LOGGING_ONLY
