@@ -31,3 +31,6 @@ steps:
   - 'asia-northeast3'
   - '--update-pypi-packages-from-file'
   - 'requirements.txt'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
